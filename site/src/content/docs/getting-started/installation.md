@@ -94,7 +94,7 @@ make -j4
 4. After it leaves DFU, confirm Katapult is running:
 
    ```sh
-   ls /dev/serial/by-id/ | grep katapult
+   ls /dev/serial/by-id/* | grep katapult
    ```
 
    You should see something like
@@ -120,14 +120,20 @@ never needs DFU or the BOOT/RESET buttons again. Katapult's own
 
 On the Pi:
 
-1. Look up the latest release's version tag:
+1. Go to the home directory:
+
+   ``````
+   cd ~
+   ``````
+
+2. Look up the latest release's version tag:
 
    ```sh
    FOCI_VERSION=$(curl -s https://api.github.com/repos/foci-rs/foci/releases/latest \
      | grep -Po '"tag_name": *"v\K[^"]+')
    ```
 
-2. Download the firmware binary and its checksum, then verify it:
+3. Download the firmware binary and its checksum, then verify it:
 
    ```sh
    curl -LO "https://github.com/foci-rs/foci/releases/download/v${FOCI_VERSION}/ouroboros-fw-v${FOCI_VERSION}-prod.bin"
@@ -141,7 +147,7 @@ On the Pi:
 1. Find the Katapult device:
 
    ```sh
-   ls /dev/serial/by-id/ | grep katapult
+   ls /dev/serial/by-id/* | grep katapult
    ```
 
 2. Flash the downloaded `.bin`:
@@ -161,7 +167,7 @@ On the Pi:
 3. Confirm the board enumerates as FOCI/Klipper, not Katapult:
 
    ```sh
-   ls /dev/serial/by-id/ | grep -i foci
+   ls /dev/serial/by-id/* | grep -i foci
    ```
 
    Note down this `/dev/serial/by-id/...` path. You'll need it for the
